@@ -39,7 +39,7 @@ public class RestApiController {
 		List<StudentFacultyDB> res = dbfn.findUser(email);
 		if(!res.isEmpty()) {
 			System.out.println(1);
-			return "Exists";
+			return "Exists "+ res.get(0).getName();
 		}
 		else {
 			System.out.println(2);
