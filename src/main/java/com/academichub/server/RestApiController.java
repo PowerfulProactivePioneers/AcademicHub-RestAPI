@@ -41,7 +41,7 @@ public class RestApiController {
 			return user.get(0);
 		}
 		else {
-			return null;
+			return new StudentFacultyDB();
 		}
 	}
 	

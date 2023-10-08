@@ -20,6 +20,8 @@ public class StudentFacultyDB {
 	
 	private char section;
 
+	
+	
 	public StudentFacultyDB(String id, String name, String uid, String dept, String email, String type, char section) {
 		super();
 		this.id = id;
