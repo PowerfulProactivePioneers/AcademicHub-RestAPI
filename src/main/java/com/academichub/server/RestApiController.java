@@ -1,49 +1,96 @@
 package com.academichub.server;
 
-import java.util.List;
+import com.academichub.server.responseClass.*;
+import com.academichub.server.databaseManager.*;
+import com.academichub.server.databaseSchema.ClassRoomDB;
+import com.academichub.server.databaseSchema.StudentClassRoomDB;
+import com.academichub.server.databaseSchema.StudentFacultyDB;
 
-import org.aspectj.weaver.patterns.VoidArrayFinder;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RestApiController {
-
-	@Autowired
-	public DBFunctions dbfn;
 	
-	@GetMapping("/sample")
-	public String sample() {
-		return "sample";
+	@Autowired
+	JDBCController controller;
+	
+	@GetMapping("/")
+	public List<StudentFacultyDB> getAllUser() {
+		return controller.getAllUsers();
 	}
 	
 	@PostMapping("/create-user")
 	public Status create(@RequestBody StudentFacultyDB data) {
-		System.out.println("New");
-		System.out.println(data.toString());
-		System.out.println(data.getSection());
-		dbfn.createUser(data);
-		Status st = new Status("success");
-		return st;
+		String query = String.format("INSERT INTO student_faculty VALUES ('%s','%s','%s','%s','%s','%s','%c')", data.getId(),data.getName(),data.getUid(),data.getDept(),data.getEmail(),data.getType(),data.getSection());
+		String res = controller.insert(query);
+		return new Status(res);
 	}
 	
 	@PostMapping("/getuser")
-	public String getUser(@RequestBody String email) {
-		System.out.println(email);
-		List<StudentFacultyDB> res = dbfn.findUser(email);
-		if(!res.isEmpty()) {
-			System.out.println(1);
-			return "Exists "+ res.get(0).getName();
+	public StudentFacultyDB getUser(@RequestBody String email) {
+		email = email.replace("\"", "");
+		System.out.println(email+email.length());
+		List<StudentFacultyDB> user = controller.findUser(email);
+		System.out.println(user);
+		if(!user.isEmpty()) {
+			return user.get(0);
 		}
 		else {
-			System.out.println(2);
-			return "Does not Exists";
+			return null;
 		}
+	}
+	
+	@PostMapping("/create-classroom")
+	public Status createClassroom(@RequestBody ClassRoomDB room) {
+		String queryString = String.format("INSERT INTO classroom VALUES ('%s','%s','%s','%s','%s','%c')", room.getCid(),room.getCcode(),room.getCname(),room.getFac_id(),room.getAllowed_dept(),room.getAllowed_section());
+		String resString = controller.insert(queryString);
+		return new Status(resString);
+	}
+	
+	@PostMapping("/join-classroom")
+	public Status joinClassRoom(@RequestBody StudentClassRoomDB data) {
+		String querString = String.format("SELECT * FROM classroom WHERE cid='%s'", data.getCid());
+		List<ClassRoomDB> classroom = controller.findClassRoom(querString);
+		if(classroom.isEmpty())
+			return new Status("Invalid Classroom");
+		
+		String query1 = String.format("SELECT * FROM student_faculty WHERE id='%s'", data.getId());
+		System.out.println(query1);
+		List<StudentFacultyDB> student = controller.findUserById(query1);
+		if(student.isEmpty())
+			return new Status("Invalid User");
+		
+		String userDept = student.get(0).getDept();
+		char userSection = student.get(0).getSection();
+		String classDept = classroom.get(0).getAllowed_dept();
+		char classSection = classroom.get(0).getAllowed_section();
+		
+		if(!classDept.equals("ALL")) {
+			if(classSection != 'N') {
+				if((userDept.equals(classDept)) && (userSection == classSection)) {
+					
+				}	
+				else {
+					return new Status("Only "+classroom.get(0).getAllowed_dept()+"-"+classroom.get(0).getAllowed_section()+" students are allowed");
+				}
+			}
+			else {
+				if(!userDept.equals(classDept))
+					return new Status("Only "+classDept+" students are allowed");
+			}
+		}
+		
+		String queryString = String.format("SELECT * FROM student_classroom WHERE id = '%s' and cid = '%s';", data.getId(),data.getCid());
+		if(controller.checkAlreadyJoined(queryString))
+			return new Status("Already Joined");
+		
+		String query = String.format("INSERT INTO student_classroom VALUES ('%s','%s');", data.getId(),data.getCid());
+		String res = controller.insert(query);
+		return new Status(res);
 	}
 }

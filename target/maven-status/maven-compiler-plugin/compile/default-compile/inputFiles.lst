@@ -1,8 +1,10 @@
-E:\Mini Project\server\src\main\java\com\academichub\server\Status.java
-E:\Mini Project\server\src\main\java\com\academichub\server\JDBCController.java
-E:\Mini Project\server\src\main\java\com\academichub\server\StudentFacultyDB.java
-E:\Mini Project\server\src\main\java\com\academichub\server\AcademicHubApplication.java
-E:\Mini Project\server\src\main\java\com\academichub\server\DBFunctions.java
-E:\Mini Project\server\src\main\java\com\academichub\server\JDBCCommandLineRunner.java
-E:\Mini Project\server\src\main\java\com\academichub\server\RestApiController.java
-E:\Mini Project\server\src\main\java\com\academichub\server\StudentFacultyRepository.java
+E:\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\StudentClassRoomDB.java
+E:\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\ClassRoomMapper.java
+E:\AcademicHub\server\src\main\java\com\academichub\server\databaseManager\JDBCController.java
+E:\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\StudentFacultyMapper.java
+E:\AcademicHub\server\src\main\java\com\academichub\server\responseClass\Status.java
+E:\AcademicHub\server\src\main\java\com\academichub\server\AcademicHubApplication.java
+E:\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\StudentFacultyDB.java
+E:\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\ClassRoomDB.java
+E:\AcademicHub\server\src\main\java\com\academichub\server\RestApiController.java
+E:\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\StudentClassroomMapper.java
