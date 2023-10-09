@@ -6,7 +6,11 @@ import com.academichub.server.databaseSchema.ClassRoomDB;
 import com.academichub.server.databaseSchema.StudentClassRoomDB;
 import com.academichub.server.databaseSchema.StudentFacultyDB;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import org.apache.logging.log4j.util.StringBuilderFormattable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -92,5 +96,29 @@ public class RestApiController {
 		String query = String.format("INSERT INTO student_classroom VALUES ('%s','%s');", data.getId(),data.getCid());
 		String res = controller.insert(query);
 		return new Status(res);
+	}
+	
+	@PostMapping("/get-user-classrooms")
+	public List<ClassRoomDB> getUserClassRooms(@RequestBody UserIDType data) {
+		if(data.getType().equals("Faculty")) {
+			String queryString = String.format("SELECT * FROM classroom WHERE fac_id = '%s'", data.getId());
+			List<ClassRoomDB> res = controller.findClass(queryString);
+			return res;
+		}
+		else {
+			String queryString = String.format("SELECT * FROM student_classroom WHERE id = '%s'", data.getId());
+			List<StudentClassRoomDB> res = controller.findClassforUser(queryString);
+			if(res.isEmpty()) {
+				return new ArrayList<ClassRoomDB>();
+			}
+			String query = "SELECT * FROM CLASSROOM WHERE";
+			for (StudentClassRoomDB item : res) {
+				query+=" cid = '"+item.getCid()+"' OR";
+			}
+			query = query.substring(0, query.length()-3);
+			System.out.println(query);
+			List<ClassRoomDB> classdata = controller.findClass(query);
+			return classdata;
+		}
 	}
 }

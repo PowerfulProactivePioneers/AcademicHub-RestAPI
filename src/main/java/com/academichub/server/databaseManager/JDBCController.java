@@ -78,4 +78,13 @@ public class JDBCController {
 			return false;
 		return true;
 	}
+	
+	// Find Classrooms
+	public List<ClassRoomDB> findClass(String query){
+		return template.query(query, new ClassRoomMapper());
+	}
+	
+	public List<StudentClassRoomDB> findClassforUser(String query){
+		return template.query(query, new StudentClassroomMapper());
+	}
 }
