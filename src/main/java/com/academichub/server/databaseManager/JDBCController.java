@@ -39,6 +39,17 @@ public class JDBCController {
 		}
 	}
 	
+	//Create tables
+	public String createTable(String query) {
+		try {
+			template.execute(query);
+			return "success";
+		}
+		catch (Exception e) {
+			return e.getCause().toString();
+		}
+	}
+	
 	// Find Specific User by email	
 	public List<StudentFacultyDB> findUser(String email) {
 		try {
@@ -86,5 +97,18 @@ public class JDBCController {
 	
 	public List<StudentClassRoomDB> findClassforUser(String query){
 		return template.query(query, new StudentClassroomMapper());
+	}
+	
+	// Insert Post
+	public int insertPost(String query1,String table) {
+		try {
+			template.update(query1);
+			String querString = String.format("SELECT max(pid) FROM %s",table);
+			int id = template.queryForObject(querString, Integer.class);
+			return id;
+		}
+		catch (Exception e) {
+			return -1;
+		}
 	}
 }
