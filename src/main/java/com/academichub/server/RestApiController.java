@@ -116,7 +116,7 @@ public class RestApiController {
 			return res;
 		}
 		else {
-			String query = String.format("SELECT * FROM CLASSROOM WHERE cid in (SELECT * FROM student_classroom WHERE id = '%s')",data.getId());
+			String query = String.format("SELECT * FROM CLASSROOM WHERE cid in (SELECT id FROM student_classroom WHERE id = '%s')",data.getId());
 			List<ClassRoomDB> classdata = controller.findClass(query);
 			System.out.println(classdata);
 			return classdata;
