@@ -3,6 +3,10 @@ package com.academichub.server.databaseSchema;
 public class Post {
 	private String title,desc,files,cid,date;
 	private boolean assignment;
+	
+	public Post() {
+		super();
+	}
 	public Post(String title, String desc, String files, String cid, String date, boolean assignment) {
 		super();
 		this.title = title;

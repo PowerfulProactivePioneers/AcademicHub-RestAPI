@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
 import org.apache.logging.log4j.util.StringBuilderFormattable;
 import org.hibernate.sql.Template;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,14 +56,19 @@ public class RestApiController {
 	public Status createClassroom(@RequestBody ClassRoomDB room) {
 		String queryString = String.format("INSERT INTO classroom VALUES ('%s','%s','%s','%s','%s','%c')", room.getCid(),room.getCcode(),room.getCname(),room.getFac_id(),room.getAllowed_dept(),room.getAllowed_section());
 		String resString = controller.insert(queryString);
-		if(!resString.equals("success"))
-			return new Status(resString);
-		queryString = String.format("CREATE TABLE %s_attendance (Date DATE,Present varchar(1000),Absent varchar(1000)", room.getCid());
+		if(resString.contains("trailing junk") || resString.equals("success")) {
+		System.out.println("1");
+		queryString = String.format("CREATE TABLE %s_attendance (date varchar(20),Present varchar(1000),Absent varchar(1000))", room.getCid());
+		System.out.println(queryString);
 		resString = controller.createTable(queryString);
-		queryString = String.format("CREATE TABLE %s_marks (rno varchar(20),CAT_1 Integer,CAT_2 Integer,CAT_3 Integer)", room.getCid());
+		System.out.println(resString);
+		queryString = String.format("CREATE TABLE %s_marks (rno varchar(20),CAT_1 Integer,Assignment_1 Integer,CAT_2 Integer,Assignment_2 Integer,CAT_3 Integer,Assignment_3 Integer)", room.getCid());
 		resString = controller.createTable(queryString);
-		queryString = String.format("CREATE TABLE %s_post (pid Integer NOT NULL PRIMARY KEY AUTO_INCREMENT,title,description varchar(500),files vatchar(100),assignment BOOLEAN,due_date varchar(15))", room.getCid());
+		System.out.println(resString);
+		queryString = String.format("CREATE TABLE %s_post (pid SERIAL PRIMARY KEY,title varchar(100),description varchar(500),files varchar,assignment BOOLEAN,due_date varchar(15))", room.getCid());
 		resString = controller.createTable(queryString);
+		System.out.println(resString);
+		}
 		return new Status(resString);
 	}
 	
@@ -105,18 +111,21 @@ public class RestApiController {
 		
 		String query = String.format("INSERT INTO student_classroom VALUES ('%s','%s');", data.getId(),data.getCid());
 		String res = controller.insert(query);
+		query = String.format("INSERT INTO %s_marks (rno) VALUES ('%s')", data.getCid().toLowerCase(),data.getId());
+		res = controller.insert(query);
 		return new Status(res);
 	}
 	
 	@PostMapping("/get-user-classrooms")
 	public List<ClassRoomDB> getUserClassRooms(@RequestBody UserIDType data) {
+		System.out.println(data.getType()+data.getId());
 		if(data.getType().equals("Faculty")) {
 			String queryString = String.format("SELECT * FROM classroom WHERE fac_id = '%s'", data.getId());
 			List<ClassRoomDB> res = controller.findClass(queryString);
 			return res;
 		}
 		else {
-			String query = String.format("SELECT * FROM CLASSROOM WHERE cid in (SELECT id FROM student_classroom WHERE id = '%s')",data.getId());
+			String query = String.format("SELECT * FROM CLASSROOM WHERE cid in (SELECT cid FROM student_classroom WHERE id = '%s')",data.getId());
 			List<ClassRoomDB> classdata = controller.findClass(query);
 			System.out.println(classdata);
 			return classdata;
@@ -126,7 +135,8 @@ public class RestApiController {
 	
 	@PostMapping("/create-post")
 	public Status createPost(@RequestBody Post data) {
-		String query = String.format("INSERT INTO %s_post (title,description,files,assignment,due_date) VALUES('%s','%s','%s','%b,'%s)", data.getCid(),data.getTitle(),data.getDesc(),data.getFiles(),data.isAssignment(),data.getDate());
+		System.out.println(data.toString());
+		String query = String.format("INSERT INTO %s_post (title,description,files,assignment,due_date) VALUES('%s','%s','%s','%b','%s')", data.getCid(),data.getTitle(),data.getDesc(),data.getFiles(),data.isAssignment(),data.getDate());
 		int id = controller.insertPost(query,data.getCid()+"_post");
 		if (id == -1) {
 			return new Status("fail");
@@ -138,4 +148,40 @@ public class RestApiController {
 		}
 		return new Status(st);
 	}
+	
+	@PostMapping("/get-post")
+	public List<Post> retreivePost(@RequestBody String cid){
+		return controller.getPost(cid.toLowerCase().replace("\"", ""));
+	}
+	
+	@PostMapping("/get-students-list")
+	public List<String> getStudentList(@RequestBody String cid){
+		System.out.println(123+cid);
+		return controller.getStudentLists(cid.replace("\"", ""));
+	}
+
+	@PostMapping("/update-marks")
+	public Status updateMarks(@RequestBody UpdateMark data) {
+		String res = controller.updateMarkSheet(data);
+		return new Status(res);
+	}
+	
+	@PostMapping("/update-attendance")
+	public Status updateAttendance(@RequestBody UpdateAttendance data) {
+		String str = controller.updateAttendance(data);
+		return new Status(str);
+	}
+	
+	@PostMapping("/get-people")
+	public List<String> getPeople(@RequestBody String data) {
+		data = data.replace("\"", "");
+		System.out.println(data);
+		List<String> lst;
+		String queryString = String.format("SELECT name FROM student_faculty WHERE id in (SELECT id FROM student_classroom WHERE cid = '%s');", data);
+		String queryString1 = String.format("SELECT name FROM student_faculty WHERE id in (SELECT fac_id FROM classroom WHERE cid = '%s');", data);
+		lst = controller.getPeople(queryString,queryString1);
+		return lst;
+	}
+
+	
 }
