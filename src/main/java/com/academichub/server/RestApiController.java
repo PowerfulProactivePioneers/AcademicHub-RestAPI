@@ -2,7 +2,9 @@ package com.academichub.server;
 
 import com.academichub.server.responseClass.*;
 import com.academichub.server.databaseManager.*;
+import com.academichub.server.databaseSchema.Attendance;
 import com.academichub.server.databaseSchema.ClassRoomDB;
+import com.academichub.server.databaseSchema.MarkSchema;
 import com.academichub.server.databaseSchema.Post;
 import com.academichub.server.databaseSchema.StudentClassRoomDB;
 import com.academichub.server.databaseSchema.StudentFacultyDB;
@@ -181,6 +183,22 @@ public class RestApiController {
 		String queryString1 = String.format("SELECT name FROM student_faculty WHERE id in (SELECT fac_id FROM classroom WHERE cid = '%s');", data);
 		lst = controller.getPeople(queryString,queryString1);
 		return lst;
+	}
+	
+	@PostMapping("/student-mark")
+	public MarkSchema getStudentMarks(@RequestBody StudentMark data){
+		String queryString = String.format("SELECT * FROM %s_marks WHERE rno = '%s'", data.getCid().toLowerCase(),data.getId());
+		return controller.getStudentMark(queryString);
+	}
+	
+	@PostMapping("/student-attendance")
+	public List<String> getStudentAttendance(@RequestBody StudentMark data) {
+		
+System.out.println(data.toString());
+		String key = "%" + data.getId() + "%";
+		String queryString = String.format("SELECT date FROM %s_attendance WHERE present ILIKE '%s'", data.getCid().toLowerCase(),key);
+		System.out.println(queryString);
+		return controller.getStudentAttendance(queryString);
 	}
 
 	

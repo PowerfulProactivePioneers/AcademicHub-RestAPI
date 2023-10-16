@@ -8,10 +8,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.academichub.server.databaseMapper.ClassRoomMapper;
+import com.academichub.server.databaseMapper.MarkSchemaMapper;
 import com.academichub.server.databaseMapper.PostMapper;
 import com.academichub.server.databaseMapper.StudentClassroomMapper;
 import com.academichub.server.databaseMapper.StudentFacultyMapper;
 import com.academichub.server.databaseSchema.ClassRoomDB;
+import com.academichub.server.databaseSchema.MarkSchema;
 import com.academichub.server.databaseSchema.Post;
 import com.academichub.server.databaseSchema.StudentClassRoomDB;
 import com.academichub.server.databaseSchema.StudentFacultyDB;
@@ -165,5 +167,15 @@ public class JDBCController {
 		String facString = template.queryForObject(q2, String.class);
 		lst.add(facString);
 		return lst;
+	}
+	
+	//Get Student Mark
+	public MarkSchema getStudentMark(String query) {
+		return template.query(query, new MarkSchemaMapper()).get(0);
+	}
+	
+	//Get Student Attendance
+	public List<String> getStudentAttendance(String query){
+		return template.queryForList(query,String.class);
 	}
 }

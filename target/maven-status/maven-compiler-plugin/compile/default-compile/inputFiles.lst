@@ -1,7 +1,7 @@
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\StudentFacultyMapper.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\Status.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseManager\JDBCController.java
-E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\Marks.java
+E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\MarkSchema.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\AcademicHubApplication.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\PostMapper.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\Marks.java
@@ -9,7 +9,9 @@ E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\resp
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\StudentFacultyDB.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\StudentClassroomMapper.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\ClassRoomDB.java
+E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\MarkSchemaMapper.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\Attendance.java
+E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\StudentMark.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\Post.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\UpdateAttendance.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\RestApiController.java
