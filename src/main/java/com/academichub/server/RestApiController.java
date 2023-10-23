@@ -200,6 +200,12 @@ System.out.println(data.toString());
 		System.out.println(queryString);
 		return controller.getStudentAttendance(queryString);
 	}
+	
+	@PostMapping("/student-all-attendance")
+	public List<AttendanceReport> getAllAttendance(@RequestBody String id){
+		id = id.replace("\"","");
+		return controller.findAllAttendance(id);
+	}
 
 	
 }

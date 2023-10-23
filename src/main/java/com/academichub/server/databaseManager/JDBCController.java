@@ -1,5 +1,6 @@
 package com.academichub.server.databaseManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.util.StringBuilderFormattable;
@@ -17,6 +18,8 @@ import com.academichub.server.databaseSchema.MarkSchema;
 import com.academichub.server.databaseSchema.Post;
 import com.academichub.server.databaseSchema.StudentClassRoomDB;
 import com.academichub.server.databaseSchema.StudentFacultyDB;
+import com.academichub.server.responseClass.AttendanceList;
+import com.academichub.server.responseClass.AttendanceReport;
 import com.academichub.server.responseClass.Marks;
 import com.academichub.server.responseClass.UpdateAttendance;
 import com.academichub.server.responseClass.UpdateMark;
@@ -177,5 +180,30 @@ public class JDBCController {
 	//Get Student Attendance
 	public List<String> getStudentAttendance(String query){
 		return template.queryForList(query,String.class);
+	}
+	
+	// Get All Attendance of student
+	public List<AttendanceReport> findAllAttendance(String id){
+		String queryString = String.format("SELECT cid FROM student_classroom WHERE id = '%s'", id);
+		List<String> classes =  template.queryForList(queryString,String.class);
+		List<String> presentList = null,absentList=null;
+		List<AttendanceReport> res = new ArrayList<AttendanceReport>();
+		for (String str : classes) {
+			queryString = String.format("SELECT date FROM %s_attendance WHERE present ILIKE '%s' ORDER BY date", str.toLowerCase(),id);
+			presentList = template.queryForList(queryString,String.class);
+			queryString = String.format("SELECT date FROM %s_attendance WHERE absent ILIKE '%s' ORDER BY date", str.toLowerCase(),id);
+			absentList = template.queryForList(queryString,String.class);
+			List<AttendanceList> lst = new ArrayList<AttendanceList>();
+			for (String str1 : presentList) {
+				lst.add(new AttendanceList(str1, true));
+			}
+			for (String str2 : absentList) {
+				lst.add(new AttendanceList(str2, false));
+			}
+			lst.sort((o1,o2)->o1.getDate().compareTo(o2.getDate()));
+			res.add(new AttendanceReport(str, lst));
+		}
+		return res;
+		
 	}
 }

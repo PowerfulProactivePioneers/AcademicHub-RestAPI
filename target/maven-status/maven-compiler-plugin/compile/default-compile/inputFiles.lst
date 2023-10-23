@@ -17,4 +17,6 @@ E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\resp
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\RestApiController.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\UserIDType.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\StudentClassRoomDB.java
+E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\AttendanceReport.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\ClassRoomMapper.java
+E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\AttendanceList.java
