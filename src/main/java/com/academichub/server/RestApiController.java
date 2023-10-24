@@ -192,13 +192,11 @@ public class RestApiController {
 	}
 	
 	@PostMapping("/student-attendance")
-	public List<String> getStudentAttendance(@RequestBody StudentMark data) {
-		
-System.out.println(data.toString());
+	public List<AttendanceList> getStudentAttendance(@RequestBody StudentMark data) {
 		String key = "%" + data.getId() + "%";
 		String queryString = String.format("SELECT date FROM %s_attendance WHERE present ILIKE '%s'", data.getCid().toLowerCase(),key);
-		System.out.println(queryString);
-		return controller.getStudentAttendance(queryString);
+		String queryString1 = String.format("SELECT date FROM %s_attendance WHERE absent ILIKE '%s'", data.getCid().toLowerCase(),key);
+		return controller.getStudentAttendance(queryString,queryString1);
 	}
 	
 	@PostMapping("/student-all-attendance")

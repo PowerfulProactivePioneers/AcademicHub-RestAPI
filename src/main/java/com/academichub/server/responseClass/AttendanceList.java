@@ -3,6 +3,10 @@ package com.academichub.server.responseClass;
 public class AttendanceList {
 	private String date;
 	private Boolean attendance;
+	
+	public AttendanceList() {
+		super();
+	}
 	public AttendanceList(String date, Boolean attendance) {
 		super();
 		this.date = date;

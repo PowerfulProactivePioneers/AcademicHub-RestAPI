@@ -178,8 +178,22 @@ public class JDBCController {
 	}
 	
 	//Get Student Attendance
-	public List<String> getStudentAttendance(String query){
-		return template.queryForList(query,String.class);
+	public List<AttendanceList> getStudentAttendance(String query,String query1){
+		List<String> dateList = template.queryForList(query,String.class);
+		List<AttendanceList> lst = new ArrayList<AttendanceList>(); 
+		for (String str : dateList) {
+			AttendanceList temp = new AttendanceList(str,true);
+			lst.add(temp);
+		}
+		dateList = template.queryForList(query1,String.class);
+		for (String str : dateList) {
+			AttendanceList temp = new AttendanceList(str,false);
+			lst.add(temp);
+		}
+		
+		lst.sort((o1,o2)->o1.getDate().compareTo(o2.getDate()));		
+		return lst;
+		
 	}
 	
 	// Get All Attendance of student
