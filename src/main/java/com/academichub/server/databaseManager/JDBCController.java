@@ -143,6 +143,20 @@ public class JDBCController {
 		return lst;
 	}
 	
+	//Get People
+	public List<String> getPeople(String q1,String q2){
+		List<String> lst = template.queryForList(q1,String.class);
+		System.out.println(lst.toString());
+		String facString = template.queryForObject(q2, String.class);
+		lst.add(facString);
+		return lst;
+	}
+	
+	//Get Student Mark
+	public MarkSchema getStudentMark(String query) {
+		return template.query(query, new MarkSchemaMapper()).get(0);
+	}
+	
 	//Update Marks
 	public String updateMarkSheet(UpdateMark data) {
 		String query;
@@ -161,20 +175,6 @@ public class JDBCController {
 	public String updateAttendance(UpdateAttendance data) {
 		String query = String.format("INSERT INTO %s_attendance VALUES('%s','%s','%s');", data.getCid().toLowerCase(),data.getDate(),data.getPresent(),data.getAbsent());
 		return insert(query);
-	}
-	
-	//Get People
-	public List<String> getPeople(String q1,String q2){
-		List<String> lst = template.queryForList(q1,String.class);
-		System.out.println(lst.toString());
-		String facString = template.queryForObject(q2, String.class);
-		lst.add(facString);
-		return lst;
-	}
-	
-	//Get Student Mark
-	public MarkSchema getStudentMark(String query) {
-		return template.query(query, new MarkSchemaMapper()).get(0);
 	}
 	
 	//Get Student Attendance

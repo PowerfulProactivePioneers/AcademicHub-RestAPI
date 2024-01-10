@@ -186,9 +186,15 @@ public class RestApiController {
 	}
 	
 	@PostMapping("/student-mark")
-	public MarkSchema getStudentMarks(@RequestBody StudentMark data){
+	public List<MarkSchema> getStudentMarks(@RequestBody StudentMark data){
+		List<MarkSchema> lst = new ArrayList<>();
 		String queryString = String.format("SELECT * FROM %s_marks WHERE rno = '%s'", data.getCid().toLowerCase(),data.getId());
-		return controller.getStudentMark(queryString);
+		lst.add(controller.getStudentMark(queryString));
+		queryString = String.format("SELECT max(rno) as rno,avg(cat_1) as cat_1,avg(cat_2) as cat_2,avg(cat_3) as cat_3,avg(assignment_1) as assignment_1,avg(assignment_2) as assignment_2,avg(assignment_3) as assignment_3 FROM %s_marks", data.getCid().toLowerCase());
+		lst.add(controller.getStudentMark(queryString));
+		queryString = String.format("SELECT max(rno) as rno,max(cat_1) as cat_1,max(cat_2) as cat_2,max(cat_3) as cat_3,max(assignment_1) as assignment_1,max(assignment_2) as assignment_2,max(assignment_3) as assignment_3 FROM %s_marks", data.getCid().toLowerCase());
+		lst.add(controller.getStudentMark(queryString));
+		return lst;
 	}
 	
 	@PostMapping("/student-attendance")

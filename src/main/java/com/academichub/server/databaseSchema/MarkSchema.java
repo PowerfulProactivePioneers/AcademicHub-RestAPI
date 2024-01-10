@@ -22,6 +22,15 @@ public class MarkSchema {
 		this.assignment3 = assignment3;
 	}
 
+	
+	
+	public MarkSchema(int cat1, int cat2, int cat3) {
+		super();
+		this.cat1 = cat1;
+		this.cat2 = cat2;
+		this.cat3 = cat3;
+	}
+
 	public String getRno() {
 		return rno;
 	}

@@ -24,6 +24,10 @@ public class AttendanceList {
 	public void setAttendance(Boolean attendance) {
 		this.attendance = attendance;
 	}
+	@Override
+	public String toString() {
+		return "AttendanceList [date=" + date + ", attendance=" + attendance + "]";
+	}
 	
 	
 	
