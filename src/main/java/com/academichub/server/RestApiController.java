@@ -17,12 +17,14 @@ import org.apache.commons.logging.Log;
 import org.apache.logging.log4j.util.StringBuilderFormattable;
 import org.hibernate.sql.Template;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin(origins = "https://shimmering-valkyrie-b9d4cf.netlify.app/")
 public class RestApiController {
 	
 	@Autowired
