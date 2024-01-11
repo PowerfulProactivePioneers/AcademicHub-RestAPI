@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "https://shimmering-valkyrie-b9d4cf.netlify.app/")
 public class RestApiController {
 	
 	@Autowired
