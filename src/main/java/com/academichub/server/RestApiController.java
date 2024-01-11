@@ -1,6 +1,9 @@
 package com.academichub.server;
 
 import com.academichub.server.responseClass.*;
+
+import requestClass.ClassDate;
+
 import com.academichub.server.databaseManager.*;
 import com.academichub.server.databaseSchema.Attendance;
 import com.academichub.server.databaseSchema.ClassRoomDB;
@@ -210,6 +213,13 @@ public class RestApiController {
 	public List<AttendanceReport> getAllAttendance(@RequestBody String id){
 		id = id.replace("\"","");
 		return controller.findAllAttendance(id);
+	}
+	
+	@PostMapping("/class-wise-attendance")
+	public List<ClassDateResponse> getClassWiseAttendance(@RequestBody ClassDate data) {
+		String queryString = String.format("SELECT present FROM %s_attendance WHERE date = '%s'", data.getCid(),data.getDate());
+		String queryString1 = String.format("SELECT absent FROM %s_attendance WHERE date = '%s'", data.getCid(),data.getDate());
+		return controller.getClassDateWiseAttendance(queryString,queryString1);
 	}
 
 	

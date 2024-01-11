@@ -20,6 +20,7 @@ import com.academichub.server.databaseSchema.StudentClassRoomDB;
 import com.academichub.server.databaseSchema.StudentFacultyDB;
 import com.academichub.server.responseClass.AttendanceList;
 import com.academichub.server.responseClass.AttendanceReport;
+import com.academichub.server.responseClass.ClassDateResponse;
 import com.academichub.server.responseClass.Marks;
 import com.academichub.server.responseClass.UpdateAttendance;
 import com.academichub.server.responseClass.UpdateMark;
@@ -217,7 +218,33 @@ public class JDBCController {
 			lst.sort((o1,o2)->o1.getDate().compareTo(o2.getDate()));
 			res.add(new AttendanceReport(str, lst));
 		}
-		return res;
-		
+		return res;	
+	}
+	
+	
+	//	Get Class and Date Wise Attendance
+	public List<ClassDateResponse> getClassDateWiseAttendance(String querString,String querString2){
+		List<ClassDateResponse> result = new ArrayList<>();
+		try {
+			String presentString = template.queryForObject(querString, String.class);
+			if(presentString.length() > 0)
+				for(String rno : presentString.split(",")) {
+					if(rno != "")
+						result.add(new ClassDateResponse(rno,true));
+				}
+			String absentString = template.queryForObject(querString2, String.class);
+			if(absentString.length() > 0)
+				for(String rno : absentString.split(",")) {
+					if(rno != "")
+						result.add(new ClassDateResponse(rno,false));
+				}
+			
+			if(result.size() > 0)
+				result.sort((o1,o2)-> Long.parseLong(o1.getRno()) < Long.parseLong(o2.getRno()) ? -1 : 1);
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return result;
 	}
 }

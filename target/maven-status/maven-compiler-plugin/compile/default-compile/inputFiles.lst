@@ -1,6 +1,7 @@
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\StudentFacultyMapper.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\Status.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseManager\JDBCController.java
+E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\ClassDateResponse.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\MarkSchema.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\AcademicHubApplication.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\PostMapper.java
@@ -20,3 +21,4 @@ E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\data
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\AttendanceReport.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\ClassRoomMapper.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\AttendanceList.java
+E:\College\Projects\AcademicHub\server\src\main\java\requestClass\ClassDate.java
