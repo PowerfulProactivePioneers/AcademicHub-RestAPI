@@ -64,11 +64,11 @@ public class RestApiController {
 		String resString = controller.insert(queryString);
 		if(resString.contains("trailing junk") || resString.equals("success")) {
 		System.out.println("1");
-		queryString = String.format("CREATE TABLE %s_attendance (date varchar(20),Present varchar(1000),Absent varchar(1000))", room.getCid());
+		queryString = String.format("CREATE TABLE %s_attendance (date varchar(20) PRIMARY KEY,Present varchar(1000),Absent varchar(1000))", room.getCid());
 		System.out.println(queryString);
 		resString = controller.createTable(queryString);
 		System.out.println(resString);
-		queryString = String.format("CREATE TABLE %s_marks (rno varchar(20),CAT_1 Integer,Assignment_1 Integer,CAT_2 Integer,Assignment_2 Integer,CAT_3 Integer,Assignment_3 Integer)", room.getCid());
+		queryString = String.format("CREATE TABLE %s_marks (rno varchar(20) PRIMARY KEY,CAT_1 Integer,Assignment_1 Integer,CAT_2 Integer,Assignment_2 Integer,CAT_3 Integer,Assignment_3 Integer)", room.getCid());
 		resString = controller.createTable(queryString);
 		System.out.println(resString);
 		queryString = String.format("CREATE TABLE %s_post (pid SERIAL PRIMARY KEY,title varchar(100),description varchar(500),files varchar,assignment BOOLEAN,due_date varchar(15))", room.getCid());

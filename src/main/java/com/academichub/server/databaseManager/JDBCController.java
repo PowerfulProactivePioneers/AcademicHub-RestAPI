@@ -174,7 +174,7 @@ public class JDBCController {
 	
 	//Update Attendance
 	public String updateAttendance(UpdateAttendance data) {
-		String query = String.format("INSERT INTO %s_attendance VALUES('%s','%s','%s');", data.getCid().toLowerCase(),data.getDate(),data.getPresent(),data.getAbsent());
+		String query = String.format("INSERT INTO %s_attendance VALUES('%s','%s','%s') ON DUPLICATE KEY UPDATE present = '%s',absent = '%s';", data.getCid().toLowerCase(),data.getDate(),data.getPresent(),data.getAbsent(),data.getPresent(),data.getAbsent());
 		return insert(query);
 	}
 	
