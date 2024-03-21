@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.academichub.server.databaseMapper.ClassMarkResponseMapper;
 import com.academichub.server.databaseMapper.ClassRoomMapper;
 import com.academichub.server.databaseMapper.MarkSchemaMapper;
 import com.academichub.server.databaseMapper.PostMapper;
@@ -21,6 +22,7 @@ import com.academichub.server.databaseSchema.StudentFacultyDB;
 import com.academichub.server.responseClass.AttendanceList;
 import com.academichub.server.responseClass.AttendanceReport;
 import com.academichub.server.responseClass.ClassDateResponse;
+import com.academichub.server.responseClass.ClassMarkResponse;
 import com.academichub.server.responseClass.Marks;
 import com.academichub.server.responseClass.UpdateAttendance;
 import com.academichub.server.responseClass.UpdateMark;
@@ -246,6 +248,14 @@ public class JDBCController {
 		catch (Exception e) {
 			System.out.println(e);
 		}
+		return result;
+	}
+	
+	
+//	Get Marks for Specific Exam
+	public List<ClassMarkResponse> getClassWiseMarkForExam(String query){
+		List<ClassMarkResponse> result = new ArrayList<>();
+		result = template.query(query, new ClassMarkResponseMapper());
 		return result;
 	}
 }

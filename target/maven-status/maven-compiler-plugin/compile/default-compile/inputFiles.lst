@@ -9,10 +9,13 @@ E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\data
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\Attendance.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\Post.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\RestApiController.java
+E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseMapper\ClassMarkResponseMapper.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\AttendanceReport.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\AttendanceList.java
+E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\ClassMarkResponse.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\Status.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseManager\JDBCController.java
+E:\College\Projects\AcademicHub\server\src\main\java\requestClass\ClassMark.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\databaseSchema\MarkSchema.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\AcademicHubApplication.java
 E:\College\Projects\AcademicHub\server\src\main\java\com\academichub\server\responseClass\Marks.java

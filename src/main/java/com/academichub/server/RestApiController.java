@@ -3,6 +3,7 @@ package com.academichub.server;
 import com.academichub.server.responseClass.*;
 
 import requestClass.ClassDate;
+import requestClass.ClassMark;
 
 import com.academichub.server.databaseManager.*;
 import com.academichub.server.databaseSchema.Attendance;
@@ -220,6 +221,12 @@ public class RestApiController {
 		String queryString = String.format("SELECT present FROM %s_attendance WHERE date = '%s'", data.getCid(),data.getDate());
 		String queryString1 = String.format("SELECT absent FROM %s_attendance WHERE date = '%s'", data.getCid(),data.getDate());
 		return controller.getClassDateWiseAttendance(queryString,queryString1);
+	}
+	
+	@PostMapping("/class-wise-marks")
+	public List<ClassMarkResponse> getClassWiseMarkForSpecificExam(@RequestBody ClassMark data) {
+		String queryString = String.format("SELECT rno,%s as mark FROM %s_marks",data.getExam(),data.getCid());
+		return controller.getClassWiseMarkForExam(queryString);
 	}
 
 	
