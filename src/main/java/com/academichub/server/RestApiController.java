@@ -13,6 +13,11 @@ import com.academichub.server.databaseSchema.Post;
 import com.academichub.server.databaseSchema.StudentClassRoomDB;
 import com.academichub.server.databaseSchema.StudentFacultyDB;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -142,8 +147,11 @@ public class RestApiController {
 	
 	@PostMapping("/create-post")
 	public Status createPost(@RequestBody Post data) {
+		LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd,yyyy");
+        String formattedDate = today.format(formatter);
 		System.out.println(data.toString());
-		String query = String.format("INSERT INTO %s_post (title,description,files,assignment,due_date,posted_date) VALUES('%s','%s','%s','%b','%s','%s')", data.getCid(),data.getTitle(),data.getDesc(),data.getFiles(),data.isAssignment(),data.getDate(),data.getPosted_date());
+		String query = String.format("INSERT INTO %s_post (title,description,files,assignment,due_date,posted_date) VALUES('%s','%s','%s','%b','%s','%s')", data.getCid(),data.getTitle(),data.getDesc(),data.getFiles(),data.isAssignment(),data.getDate(),formattedDate);
 		int id = controller.insertPost(query,data.getCid()+"_post");
 		if (id == -1) {
 			return new Status("fail");
