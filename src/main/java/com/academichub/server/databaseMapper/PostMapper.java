@@ -12,11 +12,13 @@ public class PostMapper implements RowMapper<Post>{
 	public Post mapRow(ResultSet resultSet, int i) throws SQLException {
 
 		Post data = new Post();
+		data.setPid(resultSet.getInt("pid"));
 		data.setTitle(resultSet.getString("title"));
 		data.setDesc(resultSet.getString("description"));
 		data.setFiles(resultSet.getString("files"));
 		data.setDate(resultSet.getString("due_date"));
 		data.setAssignment(Boolean.getBoolean( resultSet.getString("assignment")));
+		data.setPosted_date(resultSet.getString("posted_date"));
 		return data;
 	}
 

@@ -143,7 +143,7 @@ public class RestApiController {
 	@PostMapping("/create-post")
 	public Status createPost(@RequestBody Post data) {
 		System.out.println(data.toString());
-		String query = String.format("INSERT INTO %s_post (title,description,files,assignment,due_date) VALUES('%s','%s','%s','%b','%s')", data.getCid(),data.getTitle(),data.getDesc(),data.getFiles(),data.isAssignment(),data.getDate());
+		String query = String.format("INSERT INTO %s_post (title,description,files,assignment,due_date,posted_date) VALUES('%s','%s','%s','%b','%s','%s')", data.getCid(),data.getTitle(),data.getDesc(),data.getFiles(),data.isAssignment(),data.getDate(),data.getPosted_date());
 		int id = controller.insertPost(query,data.getCid()+"_post");
 		if (id == -1) {
 			return new Status("fail");
